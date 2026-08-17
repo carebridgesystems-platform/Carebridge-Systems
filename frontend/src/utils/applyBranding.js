@@ -15,15 +15,14 @@ export function applyPlatformBranding(settings = {}) {
     document.title = settings.platformName;
   }
 
-  if (settings.faviconUrl) {
-    let link = document.querySelector("link[rel='icon']");
-    if (!link) {
-      link = document.createElement('link');
-      link.rel = 'icon';
-      document.head.appendChild(link);
-    }
-    link.href = settings.faviconUrl;
+  const faviconHref = settings.faviconUrl || '/favicon.ico';
+  let link = document.querySelector("link[rel='icon']");
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.head.appendChild(link);
   }
+  link.href = faviconHref;
 
   document.documentElement.style.removeProperty('--hospital-primary');
 }
@@ -56,5 +55,5 @@ export const DEFAULT_PLATFORM_BRANDING = {
   logoUrl: '',
   primaryColor: '#2563eb',
   accentColor: '#06b6d4',
-  faviconUrl: '',
+  faviconUrl: '/favicon.ico',
 };

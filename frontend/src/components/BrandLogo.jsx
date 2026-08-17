@@ -1,11 +1,12 @@
 import { useBranding } from '../context/BrandingContext';
+import careBridgeLogoWhite from '../assets/care-bridge-logo-white.png';
 
 /** Sidebar / header logo block using current effective branding */
 const BrandLogo = ({ size = 'md', className = '' }) => {
   const { effective } = useBranding();
   const name = effective.platformName || 'CareBridge';
-  const logoUrl = effective.logoUrl;
-  const primary = effective.primaryColor || '#2563eb';
+  const hasCustomLogo = Boolean(effective.logoUrl);
+  const logoUrl = effective.logoUrl || careBridgeLogoWhite;
 
   const box =
     size === 'sm'
@@ -14,28 +15,18 @@ const BrandLogo = ({ size = 'md', className = '' }) => {
         ? 'w-12 h-12 text-lg'
         : 'w-9 h-9 text-sm';
 
+  // White asset needs a dark tile on the light sidebar; custom logos keep a light tile.
+  const tileBg = hasCustomLogo ? 'bg-white border-slate-200' : 'bg-slate-900 border-slate-800';
+
   return (
-    <div className={`flex items-center gap-2 min-w-0 ${className}`}>
-      {logoUrl ? (
-        <img
-          src={logoUrl}
-          alt={name}
-          className={`${box} rounded-xl object-contain border border-slate-200 bg-white shrink-0`}
-          onError={(e) => {
-            e.target.style.display = 'none';
-          }}
-        />
-      ) : (
-        <div
-          className={`${box} rounded-xl text-white flex items-center justify-center font-black shrink-0`}
-          style={{ backgroundColor: primary }}
-        >
-          {name.charAt(0).toUpperCase()}
-        </div>
-      )}
-      <span className="font-bold truncate" style={{ color: primary }}>
-        {name}
-      </span>
+    <div className={`flex items-center min-w-0 ${className}`}>
+      <img
+        src={logoUrl}
+        alt={name}
+        onError={(e) => {
+          e.target.src = careBridgeLogoWhite;
+        }}
+      />
     </div>
   );
 };

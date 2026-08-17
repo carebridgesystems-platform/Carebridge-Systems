@@ -1,12 +1,12 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { useBranding } from '../context/BrandingContext';
+import careBridgeLogoWhite from '../assets/care-bridge-logo-white.png';
 
 const AuthLayout = () => {
   const location = useLocation();
   const isHospitalReg = location.pathname === '/register/hospital';
   const { effective } = useBranding();
   const name = effective.platformName || 'CareBridge';
-  const logoUrl = effective.logoUrl;
   const primary = effective.primaryColor || '#2563eb';
   const accent = effective.accentColor || '#06b6d4';
 
@@ -29,19 +29,7 @@ const AuthLayout = () => {
         </div>
 
         <div className="z-10 relative">
-          {logoUrl ? (
-            <img src={logoUrl} alt={name} className="h-14 max-w-[240px] object-contain" />
-          ) : (
-            <div className="flex items-center gap-3">
-              <div
-                className="w-12 h-12 rounded-xl text-white flex items-center justify-center text-xl font-black shadow-xl"
-                style={{ backgroundColor: 'rgba(255,255,255,0.2)' }}
-              >
-                {name.charAt(0).toUpperCase()}
-              </div>
-              <span className="text-2xl font-bold tracking-tight">{name}</span>
-            </div>
-          )}
+          <img src={careBridgeLogoWhite} alt={name} className="h-14 max-w-[240px] object-contain" />
         </div>
 
         <div className="z-10 relative mt-auto mb-20 space-y-6">
@@ -63,20 +51,12 @@ const AuthLayout = () => {
 
       <div className="flex-1 flex flex-col justify-center bg-white overflow-y-auto relative">
         <div className={`w-full mx-auto px-6 py-12 lg:px-12 xl:px-20 ${isHospitalReg ? 'max-w-4xl' : 'max-w-xl'}`}>
-          <div className="flex lg:hidden items-center justify-center gap-3 mb-8">
-            {logoUrl ? (
-              <img src={logoUrl} alt={name} className="h-10 object-contain" />
-            ) : (
-              <>
-                <div
-                  className="w-10 h-10 rounded-xl text-white flex items-center justify-center font-black shadow-lg"
-                  style={{ backgroundColor: primary }}
-                >
-                  {name.charAt(0).toUpperCase()}
-                </div>
-                <span className="text-xl font-bold tracking-tight text-slate-900">{name}</span>
-              </>
-            )}
+          <div className="flex lg:hidden items-center justify-center mb-8">
+            <img
+              src={careBridgeLogoWhite}
+              alt={name}
+              className="h-10 object-contain rounded-lg bg-slate-900 px-2 py-1"
+            />
           </div>
 
           <Outlet />
